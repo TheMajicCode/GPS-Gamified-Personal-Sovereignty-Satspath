@@ -1,0 +1,11 @@
+{
+  "description": "70/20/10 split of 100001 sats; largest-remainder gives provider the extra sat",
+  "pinned_roles": [
+    { "role": "provider", "weight": 70 },
+    { "role": "referrer", "weight": 20 },
+    { "role": "community-fund", "weight": 10 }
+  ],
+  "gross_sat": 100001,
+  "expected_amounts": [70001, 20000, 10000],
+  "invariant": "sum(expected_amounts) == gross_sat, always, for any gross"
+}
