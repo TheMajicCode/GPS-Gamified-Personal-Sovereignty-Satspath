@@ -23,6 +23,10 @@ node --test        # zero dependencies; Node 20+
 node demo.js       # Aura sale → 70/20/10 split → 3 payments → 3 receipts
 ```
 
+## GPS Testnet Console
+
+The TypeScript/Next.js console adds persistent SQLite settlement orchestration, a mock mode, and an LND testnet-only payment rail. See [TESTNET-DEMO.md](docs/TESTNET-DEMO.md). From the repository root: `pnpm install && GPS_PAYMENT_MODE=mock pnpm dev`.
+
 ## What's real vs. stubbed
 **Real:** Ed25519 identities (did:key), canonical signing, SplitPolicy + Agreement
 (sign/verify, tamper-fail), integer-exact split math (largest-remainder), settlement

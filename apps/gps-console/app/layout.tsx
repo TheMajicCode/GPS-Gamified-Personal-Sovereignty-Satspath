@@ -1,0 +1,1 @@
+import'./styles.css';import'@xyflow/react/dist/style.css';export const metadata={title:'GPS Testnet Console',description:'Human-approved Bitcoin testnet settlement orchestration'};export default function Layout({children}:{children:React.ReactNode}){return <html lang="en"><body>{children}</body></html>}
