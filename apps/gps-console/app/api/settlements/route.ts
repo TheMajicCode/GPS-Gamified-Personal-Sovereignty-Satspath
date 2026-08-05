@@ -1,0 +1,4 @@
+import { seed, runtime, view } from '@/server/runtime';
+export const dynamic='force-dynamic';
+export async function GET(){const s=seed();return Response.json(view(s.id))}
+export async function POST(req:Request){try{const b=await req.json()as{action?:string;id?:string;itemId?:string;invoice?:string;confirmation?:string};if(!b.id)throw new Error('Settlement id required');if(b.action==='attach-invoice'){if(!b.itemId||!b.invoice)throw new Error('Item and invoice are required');await runtime.service.attachInvoice(b.id,b.itemId,b.invoice)}else if(b.action==='approve')runtime.service.approve(b.id,b.confirmation??'');else if(b.action==='execute')await runtime.service.execute(b.id);else throw new Error('Unknown action');return Response.json(view(b.id))}catch(e){const x=e as Error&{code?:string};return Response.json({error:x.message,code:x.code??'REQUEST_FAILED'},{status:400})}}

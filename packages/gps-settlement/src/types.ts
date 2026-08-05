@@ -1,0 +1,12 @@
+export const SETTLEMENT_STATUSES=['DRAFT','PLANNED','AWAITING_INVOICES','READY_FOR_APPROVAL','APPROVED','EXECUTING','PARTIALLY_SETTLED','SUCCEEDED','FAILED','CANCELLED'] as const; export type SettlementStatus=typeof SETTLEMENT_STATUSES[number];
+export const ITEM_STATUSES=['PENDING_INVOICE','INVOICE_VALIDATED','READY','PAYING','IN_FLIGHT','SUCCEEDED','FAILED','SKIPPED','UNKNOWN'] as const; export type SettlementItemStatus=typeof ITEM_STATUSES[number];
+export type Network='mock'|'regtest'|'testnet';
+export interface SettlementRecord{id:string;agreementId:string;grossSat:number;network:Network;status:SettlementStatus;maxTotalFeeSat:number;snapshotJson:string;createdAt:string;approvedAt?:string;completedAt?:string}
+export interface SettlementItemRecord{id:string;settlementId:string;role:string;recipientDid:string;recipientName:string;weight:number;amountSat:number;invoice?:string;invoiceHash?:string;paymentHash?:string;status:SettlementItemStatus;feeLimitSat:number;actualFeeSat?:number;failureCode?:string;failureMessage?:string;startedAt?:string;completedAt?:string}
+export interface PaymentAttemptRecord{id:string;settlementItemId:string;idempotencyKey:string;paymentHash:string;status:string;lndPaymentIndex?:string;failureReason?:string;createdAt:string;updatedAt:string}
+export type AuditEventType='SETTLEMENT_CREATED'|'INVOICE_ATTACHED'|'INVOICE_VALIDATED'|'APPROVAL_GRANTED'|'EXECUTION_STARTED'|'PAYMENT_STARTED'|'PAYMENT_IN_FLIGHT'|'PAYMENT_SUCCEEDED'|'PAYMENT_FAILED'|'PAYMENT_UNKNOWN'|'ITEM_SKIPPED'|'SETTLEMENT_SUCCEEDED'|'SETTLEMENT_PARTIAL'|'SETTLEMENT_FAILED'|'LEDGER_VERIFIED';
+export interface AuditEvent{id:string;settlementId:string;settlementItemId?:string;type:AuditEventType;metadata:Record<string,unknown>;createdAt:string}
+export interface DecodedInvoice{paymentHash:string;amountSat:number|null;network:'mainnet'|'testnet'|'regtest'|'unknown';expiresAt:string;destination?:string}
+export interface PaymentUpdate{status:'IN_FLIGHT'|'SUCCEEDED'|'FAILED'|'UNKNOWN';paymentHash:string;paymentPreimage?:string;paymentIndex?:string;amountSat:number;feeSat:number;failureReason?:string}
+export interface LightningSettlementProof{rail:'lightning-lnd';network:'testnet';paymentHash:string;paymentPreimage:string;paymentIndex?:string;amountSat:number;feeSat:number;invoiceHash:string;settledAt:string}
+export interface NodeInfo{alias:string;pubkey:string;network:'testnet';blockHeight:number;syncedToChain:boolean;activeChannels:number;outboundBalanceSat?:number}

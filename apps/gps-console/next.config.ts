@@ -1,0 +1,1 @@
+import type{NextConfig}from'next';const config:NextConfig={agentRules:false,serverExternalPackages:['better-sqlite3'],transpilePackages:['@gps/settlement','@gps/storage','@gps/lightning-lnd']};export default config;
